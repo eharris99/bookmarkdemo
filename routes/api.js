@@ -1,22 +1,42 @@
 var express = require('express');
 var router = express.Router();
+var entryController = require('../controllers/EntryController')
 var profileController = require('../controllers/ProfileController')
+var controllers = {
+	entry: entryController,
+	profile: profileController
+}
 
 /* GET users listing. */
 router.get('/:resource', function(req, res, next) {
-  
-  var resource = req.params.resource
+	var resource = req.params.resource
 
-  if (resource == 'profile') {
-  	var data = {
-  	confirmation: 'success',
-  	resource: 'test'
-  	}
-  	res.json(data)
+	var controller = controllers[resource]
+	if (controller == null){
+	    res.json({
+	    	confirmation:'fail',
+	    	message: 'Invalid Resource'
+	    })
 
-  }
-  
+		return
+	}
 
-});
+	controller.get(req.query, false, function(err, results){
+		if (err){
+		    res.json({
+		    	confirmation:'fail',
+		    	message: err
+		    })
+			return
+		}
+
+	    res.json({
+	    	confirmation:'success',
+	    	results: results
+	    })
+
+		return
+	})
+})
 
 module.exports = router;
