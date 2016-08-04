@@ -61,7 +61,7 @@ router.post('/:resource', function(req, res, next) {
 			return
 		}
 
-		if (resource == 'profile')
+		// if (resource == 'profile')
 			// req.session.user = result._id // install session cookie to remember
 		
 	    res.json({
