@@ -7,9 +7,18 @@
   <body>
     <h1>{{ title }}</h1>
     <form action="/api/entry" method="post">
+ 
+    	Enter a Link
     	<input type="text" name="title" placeholder="Title" />
     	<input type="text" name="url" placeholder="Url" />
     	<input type="submit" value="Submit" />
+    </form>
+    <form action="/api/profile" method="post">
+    	Enter Your Profile
+    	<input type="text" name="username" placeholder="Username" />
+    	<input type="text" name="email" placeholder="Email" />
+    	<input type="submit" value="Submit" />
+    	
     </form>
   </body>
 </html>
