@@ -21510,23 +21510,30 @@
 		function Entries(props, context) {
 			_classCallCheck(this, Entries);
 	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Entries).call(this, props, context));
+			var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Entries).call(this, props, context));
 	
-			_this.state = {
-				entries: [{ id: 0, title: 'Google', url: 'http://www.google.com' }, { id: 1, title: 'ESPN', url: 'http://www.espn.com' }, { id: 2, title: 'Deadspin', url: 'http://www.deadspin.com' }, { id: 3, title: 'Reddit', url: 'http://www.reddit.com' }]
+			_this2.state = {
+				entries: []
 			};
-			return _this;
+			return _this2;
 		}
 	
 		_createClass(Entries, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				var _this = this;
 				//		console.log('Component Did Mount')
 				_APIManager2.default.handleGet('/api/entry', null, function (err, response) {
 					if (err) {
 						alert(err);
 						return;
 					}
+	
+					var entries = response.results;
+	
+					_this.setState({
+						entries: entries
+					});
 	
 					console.log('Entries: ' + JSON.stringify(response));
 				});
@@ -21535,7 +21542,7 @@
 			key: 'render',
 			value: function render() {
 				var entryList = this.state.entries.map(function (entry, i) {
-					return _react2.default.createElement(_EntryPreview2.default, { key: entry.id, entry: entry });
+					return _react2.default.createElement(_EntryPreview2.default, { key: entry._id, entry: entry });
 				});
 				// var entryArray = this.props.entries[this.props.params.phone]
 				// var entryList = null

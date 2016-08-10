@@ -7,22 +7,26 @@ class Entries extends Component {
 	constructor(props, context){
 		super(props, context)
 		this.state = {
-			entries: [
-				{id:0, title:'Google', url:'http://www.google.com'},
-				{id:1, title:'ESPN', url:'http://www.espn.com'},
-				{id:2, title:'Deadspin', url:'http://www.deadspin.com'},
-				{id:3, title:'Reddit', url:'http://www.reddit.com'}
+			entries:[
+
 			]
 		}
 	}
 
 	componentDidMount(){
+		var _this=this
 //		console.log('Component Did Mount')
 		APIManager.handleGet('/api/entry', null, function(err, response){
 			if (err){
 				alert(err)
 				return
 			}
+
+			var entries = response.results
+
+			_this.setState({
+				entries: entries
+			})
 
 			console.log('Entries: '+JSON.stringify(response))
 
@@ -32,7 +36,7 @@ class Entries extends Component {
 
 	render(){
 		var entryList = this.state.entries.map(function(entry, i){
-			return <EntryPreview key={entry.id} entry={entry} />
+			return <EntryPreview key={entry._id} entry={entry} />
 		})
 		// var entryArray = this.props.entries[this.props.params.phone]
 		// var entryList = null
