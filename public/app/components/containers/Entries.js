@@ -1,15 +1,18 @@
 import React, {Component} from 'react'
 import EntryPreview from '../../components/EntryPreview'
 import APIManager from '../../utils/APIManager'
+import store from '../../stores/store'
+import actions from '../../actions/actions'
+import { connect } from 'react-redux'
 
 class Entries extends Component {
 
 	constructor(props, context){
 		super(props, context)
 		this.state = {
-			entries:[
+			// entries:[
 
-			]
+			// ]
 		}
 	}
 
@@ -22,20 +25,21 @@ class Entries extends Component {
 				return
 			}
 
-			var entries = response.results
+			// var entries = response.results
 
-			_this.setState({
-				entries: entries
-			})
+			// _this.setState({
+			// 	entries: entries
+			// })
 
-			console.log('Entries: '+JSON.stringify(response))
+			// console.log('Entries: '+JSON.stringify(response))
+			store.dispatch(actions.entriesReceived(response.results))
 
 		})
 
 	}
 
 	render(){
-		var entryList = this.state.entries.map(function(entry, i){
+		var entryList = this.props.entries.map(function(entry, i){
 			return <EntryPreview key={entry._id} entry={entry} />
 		})
 		// var entryArray = this.props.entries[this.props.params.phone]
@@ -60,4 +64,13 @@ class Entries extends Component {
 
 }
 
-export default Entries
+// export default Entries
+
+const stateToProps = function(state){
+	return {
+		entries: state.entriesReducer.entriesArray
+	}
+
+}
+
+export default connect(stateToProps)(Entries)
